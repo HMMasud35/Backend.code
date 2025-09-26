@@ -7,6 +7,8 @@ const pathNotFound = require('./src/utils/pathnotfound')
 const app = express()
 const port = process.env.PORT || 5000
 
+app.use(express.json())
+
 //database connection
 dbConnection()
 

@@ -1,23 +1,36 @@
 const { default: mongoose } = require("mongoose");
+const bcrypt = require('bcrypt');
 
-const singpuSchema = new mongoose.Schema({
+const singupSchema = new mongoose.Schema({
   name: {
     type: String,
-    requred: true
+    required: [true, "Name is Required"]
   },
   email: {
     type: String,
-    requred: true
+    required: [true, "Email is Required"],
+    unique: true,
+    match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
   },
   password: {
     type: String,
-    requred: true
+    required: [true, "Password is Required"],
+    // match: [/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/, "Please enter a valid password"],
   },
   phone: {
     type: Number,
   },
   role: {
+    type: String,
     enum: ["user", "admin"],
     default: "user"
   }
-}, {timestamps:true})
+}, { timestamps: true })
+
+singupSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+module.exports = mongoose.model("User", singupSchema)

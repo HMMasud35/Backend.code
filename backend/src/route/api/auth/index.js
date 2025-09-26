@@ -1,9 +1,7 @@
-const express = require("express")
+const express = require("express");
+const { signupController } = require("../../../controller/authController");
 const router = express.Router()
 
-router.post("/signup", (req, res) => {
-  return res.send("signup route working ...")
-})
-console.log("signup route working ...");
+router.post("/signup", signupController )
 
 module.exports = router
