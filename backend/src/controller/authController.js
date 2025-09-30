@@ -1,5 +1,7 @@
 const signupModel = require("../model/signup.model");
 
+
+// user registration
 const signupController = async (req, res, next) => {
   let { name, email, password, phone, role } = req.body
 
@@ -27,4 +29,27 @@ const signupController = async (req, res, next) => {
     })
 }
 
-module.exports = { signupController }
+
+// get all user
+const alluserController = async (req, res, next) => {
+  try {
+    let allusers = await signupModel.find({})
+    return res
+      .status(200)
+      .json({
+        success: true,
+        message: "all users fetch successfull",
+        data: allusers
+      })
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: err.message || err
+      })
+  }
+
+}
+
+module.exports = { signupController, alluserController }

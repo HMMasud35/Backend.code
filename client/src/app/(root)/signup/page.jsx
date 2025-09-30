@@ -1,75 +1,103 @@
 "use client"
+import axios from 'axios';
 import React, { useState } from 'react'
 
+
 const Signup = () => {
-  const [tasks, setTasks] = useState([]);
-  const [Id, setId] = useState("")
-  const [Title, setTitle] = useState("")
-  const [Category, setCategory] = useState("")
-  const [Price, setPrice] = useState("")
+  const [userlist, setUserlist] = useState([]);
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [phone, setPhone] = useState("")
+
 
   const addTask = () => {
-    if (Id.trim() && Title.trim() && Category.trim() && Price.trim()) {
-      axios.post("http://localhost:3000/addtodo", {
-        Id,
-        Title,
-        Category,
-        Price,
+    if (name.trim() && email.trim() && password.trim() && phone.trim()) {
+      axios.post("http://localhost:4000/api/v1/auth/signup", {
+        name,
+        email,
+        password,
+        phone,
       }).then((res) => {
         console.log(res);
       }).catch((err) => {
         console.log(err);
       })
-      setTasks([...tasks, { Id, Title, Category, Price }]);
+
+      setUserlist([...userlist, { name, email, password, phone }]);
+      setName("")
+      setEmail("")
+      setPassword("")
+      setPhone("")
+
+      alert("Registration Successfull")
     } else {
-      alert("fill require")
+      alert("Name, Email and Password required")
     }
-    setId("")
-    setTitle("")
-    setCategory("")
-    setPrice("")
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-5 bg-white rounded-2xl shadow-lg">
-      <h1 className="text-2xl font-bold mb-4 text-center">📝 To-Do List</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+        <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
 
-      <div className="grid grid-rows-4 gap-3">
-        <input
-          type="text"
-          value={Id}
-          onChange={(e) => setId(e.target.value)}
-          placeholder="ID"
-          className="flex-1 border rounded-lg px-3 py-2 "
-        />
-        <input
-          type="text"
-          value={Title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          className="flex-1 border rounded-lg px-3 py-2 "
-        />
-        <input
-          type="text"
-          value={Category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
-          className="flex-1 border rounded-lg px-3 py-2 "
-        />
-        <input
-          type="number"
-          value={Price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Price"
-          className="flex-1 border rounded-lg px-3 py-2 "
-        />
+        <form className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Your Name"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+              required
+            />
+          </div>
 
-        <button
-          onClick={addTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-        >
-          Add
-        </button>
+          <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Your Email Address"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter Strong Password"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Phone</label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter Your Phone / Mobile Number"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            onClick={addTask}
+            className="w-full bg-sky-600 text-white py-2 rounded-md hover:bg-sky-700 transition disabled:opacity-60"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   )

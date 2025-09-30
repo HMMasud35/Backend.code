@@ -10,7 +10,7 @@ const singupSchema = new mongoose.Schema({
     type: String,
     required: [true, "Email is Required"],
     unique: true,
-    match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
+    // match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
   },
   password: {
     type: String,
@@ -18,7 +18,7 @@ const singupSchema = new mongoose.Schema({
     // match: [/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/, "Please enter a valid password"],
   },
   phone: {
-    type: Number,
+    type: String,
   },
   role: {
     type: String,
