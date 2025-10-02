@@ -24,6 +24,13 @@ const singupSchema = new mongoose.Schema({
     type: String,
     enum: ["user", "admin"],
     default: "user"
+  },
+  otp: {
+    type: Number
+  },
+  verify: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 
