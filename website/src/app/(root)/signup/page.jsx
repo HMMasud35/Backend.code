@@ -1,5 +1,6 @@
 "use client"
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useState } from 'react'
 
 
@@ -86,7 +87,6 @@ const Signup = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter Your Phone / Mobile Number"
               className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              required
             />
           </div>
 
@@ -95,8 +95,12 @@ const Signup = () => {
             onClick={addTask}
             className="w-full bg-sky-600 text-white py-2 rounded-md hover:bg-sky-700 transition disabled:opacity-60"
           >
-            Submit
+            Sign Up
           </button>
+          <div className='flex gap-3'>
+            <h3>Already have an account?</h3>
+            <Link className='text-sky-500 underline' href={"/login"}>Sign in</Link>
+          </div>
         </form>
       </div>
     </div>

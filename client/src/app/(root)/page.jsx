@@ -1,11 +1,12 @@
+"use client"
 import React from 'react'
-import Signup from './signup/page'
+import Userlist from './userlist/page'
 
 
 const page = () => {
   return (
     <>
-      <Signup />
+      <Userlist />
     </>
   )
 }
