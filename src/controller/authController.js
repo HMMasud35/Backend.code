@@ -2,6 +2,7 @@ const signupModel = require("../model/signup.model");
 const generateOTP = require("../utils/otp");
 const sendEmailVerify = require("../utils/send_email");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // user registration
 const signupController = async (req, res, next) => {
@@ -118,6 +119,15 @@ const loginController = async (req, res, next) => {
   } else {
     bcrypt.compare(password, user.password, function (err, result) {
       if (result) {
+        let token = jwt.sign({
+          email: user.email,
+          role: user.role
+        },
+          process.env.PRIVETE_KEY,
+          {
+            expiresIn: "4m"
+          });
+
         let info = {
           name: user.name,
           email: user.email,
@@ -130,7 +140,8 @@ const loginController = async (req, res, next) => {
           .json({
             success: true,
             message: "login successfull",
-            data: info
+            data: info,
+            token
           })
       } else {
         return res
@@ -147,7 +158,7 @@ const loginController = async (req, res, next) => {
 // get all user
 const alluserController = async (req, res, next) => {
   try {
-    let allusers = await signupModel.find({})
+    let allusers = await signupModel.find({}).select("-password")
     return res
       .status(200)
       .json({
