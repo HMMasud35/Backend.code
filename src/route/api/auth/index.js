@@ -4,14 +4,20 @@ const {
   alluserController,
   verifyOtpController,
   loginController,
-
 } = require("../../../controller/authController");
-const { tokenCheckMiddelware, adminCheck } = require("../../../utils/authMiddelware");
+const {
+  tokenCheckMiddelware,
+  adminCheck
+} = require("../../../utils/authMiddelware");
 const router = express.Router()
 
 router.post("/signup", signupController)
 router.post("/verify-otp", verifyOtpController)
 router.post("/login", loginController)
-router.get("/getuserlist", tokenCheckMiddelware, adminCheck, alluserController)
+router.get("/userlist",
+  tokenCheckMiddelware,
+  adminCheck,
+  alluserController
+)
 
 module.exports = router
