@@ -5,7 +5,10 @@ const generateOTP = () => {
   for (let i = 0; i < 6; i++) {
     OTP += digits[Math.floor(Math.random() * len)];
   }
+  
   return OTP
 }
+
+
 
 module.exports = generateOTP

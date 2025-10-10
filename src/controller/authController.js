@@ -18,7 +18,6 @@ const signupController = async (req, res, next) => {
       })
   } else {
     let otp = generateOTP()
-
     let user = new signupModel({
       name,
       email,
@@ -42,12 +41,19 @@ const signupController = async (req, res, next) => {
         //   await otpremove.save()
         // }, 30000);
 
+        let info = {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          role: user.role
+        }
+
         return res
           .status(201)
           .json({
             success: true,
             message: "user created successfull",
-            data: user
+            data: info
           })
       })
       .catch((err) => {
@@ -57,7 +63,8 @@ const signupController = async (req, res, next) => {
 }
 
 // OTP verify
-const verifyController = async (req, res, next) => {
+const verifyOtpController = async (req, res, next) => {
+
   let { email, otp } = req.body
 
   let user = await signupModel.findOne({ email })
@@ -111,12 +118,19 @@ const loginController = async (req, res, next) => {
   } else {
     bcrypt.compare(password, user.password, function (err, result) {
       if (result) {
+        let info = {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          role: user.role
+        }
+
         return res
           .status(200)
           .json({
             success: true,
             message: "login successfull",
-            data: user
+            data: info
           })
       } else {
         return res
@@ -152,4 +166,4 @@ const alluserController = async (req, res, next) => {
 
 }
 
-module.exports = { signupController, alluserController, verifyController, loginController }
+module.exports = { signupController, alluserController, verifyOtpController, loginController }
