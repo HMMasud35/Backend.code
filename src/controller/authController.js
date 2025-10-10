@@ -177,4 +177,9 @@ const alluserController = async (req, res, next) => {
 
 }
 
-module.exports = { signupController, alluserController, verifyOtpController, loginController }
+module.exports = {
+  signupController,
+  alluserController,
+  verifyOtpController,
+  loginController
+}
